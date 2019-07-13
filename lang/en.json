@@ -99,6 +99,8 @@
   "search.filter.date.picker.option.month.label": "Month picker",
   "search.filter.date.picker.option.dateRange.label": "Date-range picker",
   "search.filter.location.label": "Location",
+  "search.filter.popover.submit.label": "Apply filter",
+  "search.filter.popover.cancel.label": "Cancel",
   "completedOp": "Complete Opportunity",
   "cancelOp": "Cancel Opportunity"
 }
