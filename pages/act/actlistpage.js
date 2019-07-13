@@ -6,6 +6,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
 import ActList from '../../components/Act/ActList'
+import Search from '../../components/Search/Search';
 
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
@@ -33,6 +34,7 @@ class Acts extends Component {
           <FormattedMessage id='act.new' defaultMessage='New Activity' description='Button to create a new activity' />
         </a></Link></Button>
         <br /><br />
+        <Search />
         <ActList acts={this.props.acts} />
       </FullPage>
     )
