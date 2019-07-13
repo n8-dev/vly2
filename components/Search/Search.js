@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React, { PureComponent } from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
-import FilterContainer from './FilterContainer'
+import FilterPopover from './FilterPopover'
 import { FormattedMessage } from 'react-intl';
 
 export const SearchContainer = styled.div`

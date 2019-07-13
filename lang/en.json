@@ -93,6 +93,12 @@
   "PersonEditPrompt": "Tell us something about yourself.",
   "search.title": "Search results for \"{search}\"",
   "search.filter.title": "Filter by:",
+  "search.filter.date.label": "Date",
+  "search.filter.date.picker.option.date.label": "Date picker",
+  "search.filter.date.picker.option.week.label": "Week picker",
+  "search.filter.date.picker.option.month.label": "Month picker",
+  "search.filter.date.picker.option.dateRange.label": "Date-range picker",
+  "search.filter.location.label": "Location",
   "completedOp": "Complete Opportunity",
   "cancelOp": "Cancel Opportunity"
 }

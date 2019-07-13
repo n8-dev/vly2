@@ -30,7 +30,7 @@ const FilterButton = styled.div`
 // intended to be a reusable component for displaying filter input components and details (passed in as children)
 // generic behaviour is that a filter can be applied and cancelled
 // TODO: allow this to be variable height so that it can handle having more children without overflowing
-const FilterContainer = ({ children, onFilterApplied, onCancel }) => (
+const FilterPopover = ({ children, onFilterApplied, onCancel }) => (
   <Container>
     <DetailsContainer>
       <Wrapper>
@@ -60,9 +60,9 @@ const FilterContainer = ({ children, onFilterApplied, onCancel }) => (
   </Container>
 );
 
-FilterContainer.propTypes = {
+FilterPopover.propTypes = {
   onFilterApplied: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
 };
 
-export default FilterContainer;
+export default FilterPopover;
