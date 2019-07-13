@@ -6,6 +6,7 @@ import FilterPopover from "./FilterPopover";
 import LocationFilter from "./Filters/LocationFilter";
 import Search from "./Search";
 import Filters from "./Filters";
+import DateFilter from "./Filters/DateFilter";
 
 export const SearchContainer = styled.div`
   margin-top: 0rem;
@@ -23,7 +24,7 @@ export const SearchContainer = styled.div`
   }
 `;
 
-const FilterItem = styled.a`
+export const FilterItem = styled.a`
   float: left;
   margin-top: 1rem;
   margin-right: 0.5rem;
@@ -35,7 +36,8 @@ const FilterItem = styled.a`
 class BigSearch extends PureComponent {
   state = {
     showFilterPopover: false,
-    selectedLocation: undefined
+    selectedLocation: undefined,
+    dateValue: []
   };
 
   handleLocation = location => {
@@ -58,6 +60,10 @@ class BigSearch extends PureComponent {
     this.props.onFilterChange(null);
   };
 
+  handleDateChange = (value) => {
+    this.setState({ dateValue: value });
+  };
+
   render() {
     const {
       onSearch,
@@ -69,15 +75,17 @@ class BigSearch extends PureComponent {
 
     const {
       showFilterPopover,
-      selectedLocation
+      selectedLocation,
+      dateValue
     } = this.state;
 
     return (
       <Search search={search} onSearch={onSearch}>
         <Filters>
-          <FilterItem onClick={onClickDateFilter}>
+          {/* <FilterItem onClick={onClickDateFilter}>
             {dateLabel}
-          </FilterItem>
+          </FilterItem> */}
+          <DateFilter value={dateValue} onChange={this.handleDateChange}/>
           <FilterItem onClick={this.showFilterDetails}>
             {this.state.selectedLocation == null
               ? "Location"
