@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React, { Children } from 'react'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
 const SearchFilterText = styled.p`
   font-size: 1rem;
@@ -45,7 +45,7 @@ const Container = styled.div`
     }
   }
   }
-`;
+`
 
 const FilterItem = styled.div`
   max-width: 20rem;
@@ -55,22 +55,22 @@ const FilterItem = styled.div`
 `
 
 const Filters = ({ children }) => {
-    return (
-        <Container>
-            <SearchFilterText>
-              <FormattedMessage
-                id='search.filter.title'
-                defaultMessage='Filter by:'
-                description='Title text displayed on left of search filters'
-              />
-            </SearchFilterText>
-            {Children.map(children, (child) => (<FilterItem>{child}</FilterItem>))}
-        </Container>
-      );
-  }
+  return (
+    <Container>
+      <SearchFilterText>
+        <FormattedMessage
+          id='search.filter.title'
+          defaultMessage='Filter by:'
+          description='Title text displayed on left of search filters'
+        />
+      </SearchFilterText>
+      {Children.map(children, (child) => (<FilterItem>{child}</FilterItem>))}
+    </Container>
+  )
+}
 
 Filters.propTypes = {
-  
+
 }
 
 export default Filters

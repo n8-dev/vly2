@@ -1,32 +1,32 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import styled from "styled-components";
-import { FilterItem } from "../BigSearch";
-import { Popover, Button, Select, Form as AntdForm } from "antd";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import { FilterItem } from '../BigSearch'
+import { Popover, Button, Select, Form as AntdForm } from 'antd'
 import DatePickerComponent, {
   formatDateBaseOn
-} from "../../../pages/search/DatePickerComponent";
-import DatePickerType from "../../Op/DatePickerType.constant";
+} from '../../../pages/search/DatePickerComponent'
+import DatePickerType from '../../Op/DatePickerType.constant'
 
-const Option = Select.Option;
+const Option = Select.Option
 
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-`;
+`
 
 const Form = styled(AntdForm)`
   > *:last-child {
     margin-right: 0;
   }
-`;
+`
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 
 class DateFilter extends Component {
   state = {
@@ -37,48 +37,48 @@ class DateFilter extends Component {
     value: undefined
   };
 
-  constructor(props) {
-    super(props);
-    this.state.value = props.value;
-    this.state.popoverValue = this.state.value;
+  constructor (props) {
+    super(props)
+    this.state.value = props.value
+    this.state.popoverValue = this.state.value
   }
 
   handleChangeDatePickerType = datePickerType => {
     this.setState({
       popoverDatePickerType: datePickerType
-    });
+    })
   };
 
   changePickerTypeIndividualDate = () => {
-    this.setState({ popoverDatePickerType: DatePickerType.IndividualDate });
+    this.setState({ popoverDatePickerType: DatePickerType.IndividualDate })
   };
 
   changePickerTypeWeekRange = () => {
-    this.setState({ popoverDatePickerType: DatePickerType.WeekRange });
+    this.setState({ popoverDatePickerType: DatePickerType.WeekRange })
   };
 
   changePickerTypeMonthRange = () => {
-    this.setState({ popoverDatePickerType: DatePickerType.MonthRange });
+    this.setState({ popoverDatePickerType: DatePickerType.MonthRange })
   };
 
   changePickerTypeDateRange = () => {
-    this.setState({ popoverDatePickerType: DatePickerType.DateRange });
+    this.setState({ popoverDatePickerType: DatePickerType.DateRange })
   };
 
   handleChange = popoverValue => {
-    this.setState({ popoverValue });
+    this.setState({ popoverValue })
   };
 
   handleVisibleChange = isVisible => {
-    this.setState({ isVisible });
+    this.setState({ isVisible })
   };
 
   handleCancel = () => {
-    this.setState({ isVisible: false });
+    this.setState({ isVisible: false })
   };
 
   handleSubmit = () => {
-    const { popoverValue, popoverDatePickerType } = this.state;
+    const { popoverValue, popoverDatePickerType } = this.state
 
     this.setState(
       {
@@ -87,69 +87,67 @@ class DateFilter extends Component {
         datePickerType: popoverDatePickerType
       },
       () => {
-        this.props.onChange(popoverValue);
+        this.props.onChange(popoverValue)
       }
-    );
+    )
   };
 
   renderLabel = () => {
-    const { value, datePickerType } = this.state;
+    const { value, datePickerType } = this.state
 
     if (!value || (Array.isArray(value) && value.length === 0)) {
       return (
-        <FormattedMessage id="search.filter.date.label" defaultMessage="Date" />
-      );
+        <FormattedMessage id='search.filter.date.label' defaultMessage='Date' />
+      )
     }
 
-    return formatDateBaseOn(datePickerType, value);
+    return formatDateBaseOn(datePickerType, value)
   };
 
-  render() {
+  render () {
     const {
-      datePickerType,
       isVisible,
-      value,
       popoverValue,
       popoverDatePickerType
-    } = this.state;
+    } = this.state
 
     const content = (
       <Content>
-        <Form layout="inline" onSubmit={this.handleSubmit}>
+        <Form layout='inline' onSubmit={this.handleSubmit}>
           <Form.Item>
             <Select
               placeholder={
                 <FormattedMessage
-                  id="search.filter.date.picker.option.date.label"
-                  defaultMessage="Date"
+                  id='search.filter.date.picker.option.date.label'
+                  defaultMessage='Date'
                 />
               }
               onChange={this.handleChangeDatePickerType}
               value={popoverDatePickerType}
               style={{ width: 150 }}
             >
-              <Option key="by-date" value={DatePickerType.IndividualDate}>
+              <Option key='by-date' value={DatePickerType.IndividualDate}>
                 <FormattedMessage
-                  id="search.filter.date.option.date.label"
-                  defaultMessage="Specific date"
+                  id='search.filter.date.option.date.label'
+                  defaultMessage='Specific date'
                 />
               </Option>
-              <Option key="by-week" value={DatePickerType.WeekRange}>
+              <Option key='by-week' value={DatePickerType.WeekRange}>
                 <FormattedMessage
-                  id="search.filter.date.option.week.label"
-                  defaultMessage="Week"
+                  id='search.filter.date.option.week.label'
+                  defaultMessage='Week'
                 />
               </Option>
-              <Option key="by-month" value={DatePickerType.MonthRange}>
+              <Option key='by-month' value={DatePickerType.MonthRange}>
                 <FormattedMessage
-                  id="search.filter.date.option.month.label"
-                  defaultMessage="Month"
+                  id='search.filter.date.option.month.label'
+                  defaultMessage='Month'
                 />
               </Option>
-              <Option key="by-date-range" value={DatePickerType.DateRange}>
+              <Option key='by-date-range' value={DatePickerType.DateRange}>
                 <FormattedMessage
-                  id="search.filter.date.option.dateRange.label"
-                  defaultMessage="Date-range"
+                  id='search.filter.date.option.dateRange.label'
+                  defaultMessage='Date-range'
                 />
               </Option>
             </Select>
@@ -163,39 +161,39 @@ class DateFilter extends Component {
           </Form.Item>
         </Form>
         <Footer>
-          <Form layout="inline" onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <Button onClick={this.handleCancel}>
-              <FormattedMessage id="search.filter.popover.cancel.label" defaultMessage="Cancel" />
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button onClick={this.handleSubmit} type="primary">
-              <FormattedMessage id="search.filter.popover.submit.label" defaultMessage="Apply filter" />
-            </Button>
-          </Form.Item>
+          <Form layout='inline' onSubmit={this.handleSubmit}>
+            <Form.Item>
+              <Button onClick={this.handleCancel}>
+                <FormattedMessage id='search.filter.popover.cancel.label' defaultMessage='Cancel' />
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Button onClick={this.handleSubmit} type='primary'>
+                <FormattedMessage id='search.filter.popover.submit.label' defaultMessage='Apply filter' />
+              </Button>
+            </Form.Item>
           </Form>
         </Footer>
       </Content>
-    );
+    )
 
     return (
       <Popover
-        placement="bottomLeft"
+        placement='bottomLeft'
         title={
           <FormattedMessage
-            id="search.filter.date.label"
-            defaultMessage="Date"
+            id='search.filter.date.label'
+            defaultMessage='Date'
           />
         }
         content={content}
-        trigger="click"
+        trigger='click'
         onVisibleChange={this.handleVisibleChange}
         visible={isVisible}
       >
         <FilterItem>{this.renderLabel()}</FilterItem>
       </Popover>
-    );
+    )
   }
 }
 
@@ -205,6 +203,6 @@ DateFilter.propTypes = {
     PropTypes.arrayOf(PropTypes.object)
   ]),
   onChange: PropTypes.func.isRequired
-};
+}
 
-export default DateFilter;
+export default DateFilter

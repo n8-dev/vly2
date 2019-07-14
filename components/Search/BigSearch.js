@@ -1,12 +1,10 @@
-import styled from "styled-components";
-import React, { PureComponent } from "react";
-import { Input } from "antd";
-import PropTypes from "prop-types";
-import FilterPopover from "./FilterPopover";
-import LocationFilter from "./Filters/LocationFilter";
-import Search from "./Search";
-import Filters from "./Filters";
-import DateFilter from "./Filters/DateFilter";
+import styled from 'styled-components'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import LocationFilter from './Filters/LocationFilter'
+import Search from './Search'
+import Filters from './Filters'
+import DateFilter from './Filters/DateFilter'
 
 export const SearchContainer = styled.div`
   margin-top: 0rem;
@@ -22,68 +20,68 @@ export const SearchContainer = styled.div`
   @media screen and (max-width: 767px) {
     width: calc(100vw - 2rem);
   }
-`;
+`
 
 export const FilterItem = styled.a`
   font-weight: bold;
-`;
+`
 
 class BigSearch extends PureComponent {
   state = {
     showFilterPopover: false,
     selectedLocation: undefined,
     dateValue: [],
-    locationValue: undefined,
+    locationValue: undefined
   };
 
   handleLocation = location => {
-    this.setState({ selectedLocation: location });
+    this.setState({ selectedLocation: location })
   };
 
   showFilterDetails = () => {
-    this.setState({ showFilterPopover: !this.state.showFilterPopover });
+    this.setState({ showFilterPopover: !this.state.showFilterPopover })
   };
 
   filterApplied = () => {
     // Reason for using set state callback https://stackoverflow.com/questions/42038590/when-to-use-react-setstate-callback
     this.setState({ showFilterPopover: !this.state.showFilterPopover }, () => {
-      this.props.onFilterChange(this.state.selectedLocation);
-    });
+      this.props.onFilterChange(this.state.selectedLocation)
+    })
   };
 
   cancelFilter = () => {
-    this.setState({ selectedLocation: undefined, showFilterPopover: false });
-    this.props.onFilterChange(null);
+    this.setState({ selectedLocation: undefined, showFilterPopover: false })
+    this.props.onFilterChange(null)
   };
 
   handleDateChange = (dateValue) => {
-    this.setState({ dateValue });
+    this.setState({ dateValue })
   };
 
   handleLocationChange = (locationValue) => {
-    this.setState({locationValue});
+    this.setState({ locationValue })
   }
 
-  render() {
+  render () {
     const {
       onSearch,
       search,
-      locations,
-    } = this.props;
+      locations
+    } = this.props
 
     const {
       dateValue,
       locationValue
-    } = this.state;
+    } = this.state
 
     return (
       <Search search={search} onSearch={onSearch}>
         <Filters>
-          <DateFilter value={dateValue} onChange={this.handleDateChange}/>
+          <DateFilter value={dateValue} onChange={this.handleDateChange} />
           <LocationFilter value={locationValue} onChange={this.handleLocationChange} options={locations} />
         </Filters>
       </Search>
-    );
+    )
   }
 }
 
@@ -94,6 +92,6 @@ BigSearch.propTypes = {
   onClickDateFilter: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   dateLabel: PropTypes.string
-};
+}
 
-export default BigSearch;
+export default BigSearch

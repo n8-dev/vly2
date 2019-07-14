@@ -1,19 +1,19 @@
-import { Button, Dropdown, Menu, Modal } from "antd";
-import Router from "next/router";
-import PropTypes from "prop-types";
-import { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import TitleSection from "../../components/LandingPageComponents/TitleSectionSub";
-import DatePickerType from "../../components/Op/DatePickerType.constant";
-import OpListSection from "../../components/Op/OpListSection";
-import BigSearch from "../../components/Search/BigSearch";
-import { Spacer } from "../../components/VTheme/VTheme";
-import publicPage, { FullPage } from "../../hocs/publicPage";
-import reduxApi, { withLocations } from "../../lib/redux/reduxApi";
-import DatePickerComponent, { formatDateBaseOn } from "./DatePickerComponent";
+import { Button, Dropdown, Menu, Modal } from 'antd'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
+import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
+import DatePickerType from '../../components/Op/DatePickerType.constant'
+import OpListSection from '../../components/Op/OpListSection'
+import BigSearch from '../../components/Search/BigSearch'
+import { Spacer } from '../../components/VTheme/VTheme'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
+import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
-const { Item } = Menu;
+const { Item } = Menu
 
 export class SearchPage extends Component {
   state = {
@@ -26,75 +26,76 @@ export class SearchPage extends Component {
     filterValue: null
   };
 
-  constructor(props) {
-    super(props);
-    this.state.search = props.search;
+  constructor (props) {
+    super(props)
+    this.state.search = props.search
   }
 
-  static getDerivedStateFromProps({ search }) {
+  static getDerivedStateFromProps ({ search }) {
     return {
       search
-    };
+    }
   }
 
-  static async getInitialProps({ store, query: { search } }) {
-    await store.dispatch(reduxApi.actions.locations.get());
+  static async getInitialProps ({ store, query: { search } }) {
+    await store.dispatch(reduxApi.actions.locations.get())
     return {
       search
-    };
+    }
   }
 
   handleOpenDatePickperModal = () => {
-    this.setState({ showDatePickerModal: !this.state.showDatePickerModal });
+    this.setState({ showDatePickerModal: !this.state.showDatePickerModal })
   };
 
   handleSearch = search => {
     if (!search) {
-      return false;
+      return false
     }
 
     Router.push({
-      pathname: "/search",
+      pathname: '/search',
       query: {
         search
       }
-    });
+    })
 
-    this.setState({ search });
+    this.setState({ search })
   };
 
   handleDateChange = change => {
     // When user clear date picker value it the date value in the state will becom null which is not an array anymore.
     // By checking if the data changed is null then we instead make it an empty array
-    if (change)
+    if (change) {
       this.setState({
         filter: {
           ...this.state.filter,
           date: Array.isArray(change) ? change : [change]
         }
-      });
-    else this.setState({ filter: { ...this.state.fitler, date: [] } });
+      })
+    } else this.setState({ filter: { ...this.state.fitler, date: [] } })
   };
 
   changePickerType = type => {
-    this.setState({ datePickerType: type });
+    this.setState({ datePickerType: type })
   };
   locFilterChanged = location => {
-    this.setState({ filterValue: location });
+    this.setState({ filterValue: location })
   };
 
   formatDateValue = () => {
-    if (this.state.filter.date.length === 0)
+    if (this.state.filter.date.length === 0) {
       return (
-        <FormattedMessage id="search.filter.date.label" defaultMessage="Date" />
-      );
-    return formatDateBaseOn(this.state.datePickerType, this.state.filter.date);
+        <FormattedMessage id='search.filter.date.label' defaultMessage='Date' />
+      )
+    }
+    return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   };
 
-  render() {
-    const { search, filterValue } = this.state;
-    const dateLabel = this.formatDateValue();
-    const existingLocations = this.props.locations.data;
+  render () {
+    const { search, filterValue } = this.state
+    const dateLabel = this.formatDateValue()
+    const existingLocations = this.props.locations.data
 
     const DatePickerOption = (
       <Menu>
@@ -103,34 +104,34 @@ export class SearchPage extends Component {
         >
           <p>
             <FormattedMessage
-              id="search.filter.date.option.date.label"
-              defaultMessage="Specific date"
+              id='search.filter.date.option.date.label'
+              defaultMessage='Specific date'
             />
           </p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.WeekRange)}>
           <p>
             <FormattedMessage
-              id="search.filter.date.option.week.label"
-              defaultMessage="Week"
+              id='search.filter.date.option.week.label'
+              defaultMessage='Week'
             /></p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.MonthRange)}>
           <p>
             <FormattedMessage
-              id="search.filter.date.option.month.label"
-              defaultMessage="Month"
+              id='search.filter.date.option.month.label'
+              defaultMessage='Month'
             /></p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.DateRange)}>
           <p>
             <FormattedMessage
-              id="search.filter.date.option.dateRange.label"
-              defaultMessage="Date-range"
+              id='search.filter.date.option.dateRange.label'
+              defaultMessage='Date-range'
             /></p>
         </Item>
       </Menu>
-    );
+    )
 
     return (
       <FullPage>
@@ -139,7 +140,7 @@ export class SearchPage extends Component {
             <FormattedMessage
               defaultMessage={`Search results for "{search}"`}
               values={{ search }}
-              id="search.title"
+              id='search.title'
             />
           }
         />
@@ -152,7 +153,7 @@ export class SearchPage extends Component {
           onFilterChange={this.locFilterChanged}
         />
         <Modal
-          title="Pick date"
+          title='Pick date'
           visible={this.state.showDatePickerModal}
           onCancel={() =>
             this.setState({
@@ -165,10 +166,10 @@ export class SearchPage extends Component {
             })
           }
         >
-          <Dropdown overlay={DatePickerOption} placement="bottomCenter">
+          <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
             <Button>
-              {this.state.datePickerType === ""
-                ? <FormattedMessage id="search.filter.date.picker.option.date.label" defaultMessage="Date" />
+              {this.state.datePickerType === ''
+                ? <FormattedMessage id='search.filter.date.picker.option.date.label' defaultMessage='Date' />
                 : this.state.datePickerType}
             </Button>
           </Dropdown>
@@ -186,7 +187,7 @@ export class SearchPage extends Component {
           location={filterValue}
         />
       </FullPage>
-    );
+    )
   }
 }
 
@@ -205,6 +206,6 @@ SearchPage.propTypes = {
   )
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
-};
+}
 
-export default publicPage(withLocations(SearchPage));
+export default publicPage(withLocations(SearchPage))

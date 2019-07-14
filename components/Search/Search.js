@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
-import FilterPopover from './FilterPopover'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
 export const SearchContainer = styled.div`
   padding: 1.5rem;
@@ -33,27 +32,27 @@ const SearchTitle = styled.p`
   color: black;
 `
 
-const Search = ({ children, onSearch, search}) => {
-    return (
+const Search = ({ children, onSearch, search }) => {
+  return (
         <>
-            <SearchContainer>
-                <SearchTitle>Search</SearchTitle>
-                    <Input.Search
-                        size='large'
-                        placeholder="try 'building robots' "
-                        enterButton={<FormattedMessage id="search.title" defaultMessage="Search" />}
-                        defaultValue={search}
-                        onSearch={onSearch}
-                    />
-                {children}
-            </SearchContainer>
+          <SearchContainer>
+            <SearchTitle>Search</SearchTitle>
+            <Input.Search
+              size='large'
+              placeholder="try 'building robots' "
+              enterButton={<FormattedMessage id='search.title' defaultMessage='Search' />}
+              defaultValue={search}
+              onSearch={onSearch}
+            />
+            {children}
+          </SearchContainer>
         </>
-      );
-  }
+  )
+}
 
 Search.propTypes = {
   search: PropTypes.string,
-  onSearch: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired
 }
 
 export default Search
