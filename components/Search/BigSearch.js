@@ -25,11 +25,6 @@ export const SearchContainer = styled.div`
 `;
 
 export const FilterItem = styled.a`
-  float: left;
-  margin-top: 1rem;
-  margin-right: 0.5rem;
-  width: 8rem;
-  text-align: center;
   font-weight: bold;
 `;
 
@@ -37,7 +32,8 @@ class BigSearch extends PureComponent {
   state = {
     showFilterPopover: false,
     selectedLocation: undefined,
-    dateValue: []
+    dateValue: [],
+    locationValue: undefined,
   };
 
   handleLocation = location => {
@@ -60,50 +56,32 @@ class BigSearch extends PureComponent {
     this.props.onFilterChange(null);
   };
 
-  handleDateChange = (value) => {
-    this.setState({ dateValue: value });
+  handleDateChange = (dateValue) => {
+    this.setState({ dateValue });
   };
+
+  handleLocationChange = (locationValue) => {
+    this.setState({locationValue});
+  }
 
   render() {
     const {
       onSearch,
       search,
       locations,
-      onClickDateFilter,
-      dateLabel
     } = this.props;
 
     const {
-      showFilterPopover,
-      selectedLocation,
-      dateValue
+      dateValue,
+      locationValue
     } = this.state;
 
     return (
       <Search search={search} onSearch={onSearch}>
         <Filters>
-          {/* <FilterItem onClick={onClickDateFilter}>
-            {dateLabel}
-          </FilterItem> */}
           <DateFilter value={dateValue} onChange={this.handleDateChange}/>
-          <FilterItem onClick={this.showFilterDetails}>
-            {this.state.selectedLocation == null
-              ? "Location"
-              : this.state.selectedLocation}
-          </FilterItem>
+          <LocationFilter value={locationValue} onChange={this.handleLocationChange} options={locations} />
         </Filters>
-        {!!showFilterPopover && (
-          <FilterPopover
-            onFilterApplied={this.filterApplied}
-            onCancel={this.cancelFilter}
-          >
-            <LocationFilter
-              locations={locations}
-              value={selectedLocation}
-              onChange={this.handleLocation}
-            />
-          </FilterPopover>
-        )}
       </Search>
     );
   }

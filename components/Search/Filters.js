@@ -1,11 +1,8 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { Children } from 'react'
 import { FormattedMessage } from 'react-intl';
 
 const SearchFilterText = styled.p`
-  margin-top: 1rem;
-  margin-right: 1rem;
-  margin-bottom: 0rem;
   font-size: 1rem;
   letter-spacing: -0.5px;
   font-weight: 500;
@@ -15,7 +12,47 @@ const SearchFilterText = styled.p`
 
 const Container = styled.div`
   display: flex;
+  > * {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+
+    :first-child {
+      margin-left: 0;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+
+  > * {
+    margin: 0;
+    padding: 0.5rem;
+    padding-left: 0;
+
+    :first-child {
+      margin-left: 0;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+  }
+  }
 `;
+
+const FilterItem = styled.div`
+  max-width: 20rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`
 
 const Filters = ({ children }) => {
     return (
@@ -27,7 +64,7 @@ const Filters = ({ children }) => {
                 description='Title text displayed on left of search filters'
               />
             </SearchFilterText>
-            {children}
+            {Children.map(children, (child) => (<FilterItem>{child}</FilterItem>))}
         </Container>
       );
   }

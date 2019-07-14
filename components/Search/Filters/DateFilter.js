@@ -26,7 +26,6 @@ const Form = styled(AntdForm)`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1000vw;
 `;
 
 class DateFilter extends Component {
@@ -126,8 +125,8 @@ class DateFilter extends Component {
                 />
               }
               onChange={this.handleChangeDatePickerType}
-              defaultValue={datePickerType}
-              style={{ width: 200 }}
+              value={popoverDatePickerType}
+              style={{ width: 150 }}
             >
               <Option key="by-date" value={DatePickerType.IndividualDate}>
                 <FormattedMessage
@@ -182,7 +181,7 @@ class DateFilter extends Component {
 
     return (
       <Popover
-        placement="bottom"
+        placement="bottomLeft"
         title={
           <FormattedMessage
             id="search.filter.date.label"
