@@ -9,7 +9,8 @@ import ActDetailForm from '../../components/Act/ActDetailForm'
 import PersonCard from '../../components/Person/PersonCard'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
-import { Role } from '../../server/services/authorize/role'
+import { Role } from '../../server/services/auth/role'
+import Link from 'next/link'
 
 const blankAct = {
   title: '',
@@ -134,8 +135,13 @@ export class ActDetailPage extends Component {
     const createOpportunitySection = () => {
       return (
         // if not signed in then the interested button signs in first
-        isOP && <div>
-          <Button>TODO: Create Opportunity</Button>
+        // isOP &&
+        <div>
+          <Link href={'/op/new?act='.concat(this.props.actid)}>
+            <Button type='primary' shape='round'>
+              Create Opportunity
+            </Button>
+          </Link>
           <Divider />
         </div>
       )
