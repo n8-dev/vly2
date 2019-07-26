@@ -133,6 +133,8 @@ OrgDetail.propTypes = {
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
+    contactEmail: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

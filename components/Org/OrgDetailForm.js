@@ -28,6 +28,12 @@ class OrgDetailForm extends Component {
   setImgUrl = (value) => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
+  setWebsite = (value) => {
+    this.props.form.setFieldsValue({ website: value })
+  }
+  setcontactEmail = (value) => {
+    this.props.form.setFieldsValue({ contactEmail: value })
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -40,6 +46,8 @@ class OrgDetailForm extends Component {
         org.slug = slug(values.name)
         org.about = values.about
         org.imgUrl = values.imgUrl
+        org.website = values.website
+        org.contactEmail = values.contactEmail
         org.category = values.type
 
         this.props.onSubmit(this.props.org)
@@ -52,6 +60,8 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
+    const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='organisation website label in OrgDetails Form' />
+    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='organisation contact email label in OrgDetails Form' />
     const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
     // TODO translate
@@ -112,6 +122,24 @@ class OrgDetailForm extends Component {
               <RichTextEditor onChange={this.setAbout} />
             )}
           </Form.Item>
+          <Form.Item label={orgWebsite}>
+            {getFieldDecorator('website', {
+              rules: [
+
+              ]
+            })(
+              <Input placeholder='www.example.com' />
+            )}
+          </Form.Item>
+          <Form.Item label={orgContactEmail}>
+            {getFieldDecorator('contactEmail', {
+              rules: [
+
+              ]
+            })(
+              <Input placeholder='example@gmail.com' />
+            )}
+          </Form.Item>
           <Form.Item label={orgImgUrl}>
             {getFieldDecorator('imgUrl', {
               rules: []
@@ -169,6 +197,8 @@ OrgDetailForm.propTypes = {
     about: PropTypes.string,
     category: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
+    contactEmail: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -191,6 +221,8 @@ export default Form.create({
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
+      website: Form.createFormField({ ...props.org.website, value: props.org.website }),
+      contactEmail: Form.createFormField({ ...props.org.contactEmail, value: props.org.contactEmail }),
       category: Form.createFormField({ ...props.org.category, value: props.org.category })
     }
   },
