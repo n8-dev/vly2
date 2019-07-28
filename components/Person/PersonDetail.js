@@ -5,8 +5,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
+import TagDisplay from '../Tags/TagDisplay'
 
 const DL = styled.dl`
+
+const TagContainer = styled.div`
+  margin-top: 0.2rem;
+`
 
 dt {
   float: left;
@@ -64,6 +69,9 @@ const PersonDetail = ({ person }, ...props) => (
       <Markdown children={person.about || ''} />
     </Col>
   </Row>
+  <TagContainer>
+  <TagDisplay tags={person.tags} />
+</TagContainer>
 )
 
 PersonDetail.propTypes = {
