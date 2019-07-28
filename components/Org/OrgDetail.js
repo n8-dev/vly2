@@ -93,10 +93,10 @@ const OrgDetail = ({ org, ...props }) => (
         />
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
-          {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
-          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>
-          {org.facebook && <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
-          {org.twitter && <ContactContainer><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
+          {org.website && <ContactContainer id='website'><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
+          {org.contactEmail && <ContactContainer id='email'><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
+          {org.facebook && <ContactContainer id='facebook'><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
+          {org.twitter && <ContactContainer id='twitter'><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
 
         </OrgContainer>
       </GridContainer>

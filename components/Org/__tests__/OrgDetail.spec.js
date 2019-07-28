@@ -1,6 +1,7 @@
 import test from 'ava'
 import OrgDetail from '../OrgDetail'
 import { mount } from 'enzyme'
+import { identifier } from '@babel/types';
 
 const org = {
   _id: 'f34gb2bh24b24b2',
@@ -28,6 +29,25 @@ test('OrgDetail renders properly', t => {
       .at(0)
       .text(),
     'Get in touch'
+  )
+
+  t.is(
+    wrapper
+      .find('svg')
+      .length,
+    10
+  )
+})
+
+test('Social renders properly', t => {
+  const wrapper = mount(<OrgDetail {...props} />)
+
+  t.is(
+    wrapper
+      .find('div', '#facebook')
+      .at(0)
+      .text(),
+    'OMGTech'
   )
 
   t.is(
