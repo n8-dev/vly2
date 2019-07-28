@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import TagInput from '../Form/Input/TagInput'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import {
   DescriptionContainer,
@@ -17,21 +18,21 @@ import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
-function hasErrors (fieldsError) {
+function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class PersonDetailForm extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.setAbout = this.setAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
-  componentDidMount () {
+  componentDidMount() {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
   }
-  setAbout (value) {
+  setAbout(value) {
     this.props.form.setFieldsValue({ about: value })
   }
 
@@ -52,13 +53,14 @@ class PersonDetailForm extends Component {
         person.about = values.about
         person.avatar = values.avatar
         person.role = values.role
+        person.tags = values.tags
         person.status = values.status
         this.props.onSubmit(this.props.person)
       }
     })
   }
 
-  render () {
+  render() {
     // get translated labels
     const personName = (
       <FormattedMessage
@@ -117,6 +119,15 @@ class PersonDetailForm extends Component {
         description='active or retired status'
       />
     )
+
+    const personTags = (
+      <FormattedMessage
+        id='personTags'
+        defaultMessage='Tags'
+        description='Descriptions of general skill this person relates to'
+      />
+    )
+
     const {
       getFieldDecorator,
       getFieldsError,
@@ -181,8 +192,8 @@ class PersonDetailForm extends Component {
                       placeholder='You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.setAbout} />
-                  )
+                      <RichTextEditor onChange={this.setAbout} />
+                    )
                 )}
               </Form.Item>
             </InputContainer>
@@ -212,6 +223,19 @@ class PersonDetailForm extends Component {
                   {getFieldDecorator('phone', {
                     rules: []
                   })(<Input placeholder='000 000 0000' />)}
+                </Form.Item>
+
+              </ShortInputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personTags}>
+                  {getFieldDecorator('tags', {
+                    initialValue: [],
+                    rules: []
+                  })(
+                    <TagInput
+                      existingTags={this.props.existingTags}
+                    />
+                  )}
                 </Form.Item>
               </ShortInputContainer>
             </InputContainer>
@@ -310,6 +334,13 @@ PersonDetailForm.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
+    // requestor: PropTypes.string,
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        tag: PropTypes.string.isRequired,
+        _id: PropTypes.string
+      })
+    ),
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
@@ -326,17 +357,23 @@ PersonDetailForm.propTypes = {
     cuid: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
+  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
+
   // dispatch: PropTypes.func.isRequired,
 }
 
 export default Form.create({
   name: 'person_detail_form',
-  onFieldsChange (props, changedFields) {
+  onFieldsChange(props, changedFields) {
     // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
-  mapPropsToFields (props) {
+  mapPropsToFields(props) {
     return {
       name: Form.createFormField({
         ...props.person.name,
@@ -373,10 +410,14 @@ export default Form.create({
       status: Form.createFormField({
         ...props.person.status,
         value: props.person.status
+      }),
+      tags: Form.createFormField({
+        ...props.op.tags,
+        value: props.op.tags
       })
     }
   },
-  onValuesChange (_, values) {
+  onValuesChange(_, values) {
     // console.log('onValuesChange', values)
   }
 })(PersonDetailForm)
