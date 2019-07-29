@@ -48,12 +48,23 @@ export class OpDetailPage extends Component {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
+    const fromAct = !!(query && query.act)
+
+    // If op is created from activity, populate data
+    let activity = null
+
     // TODO: [VP-280] run get location and tag data requests in parallel
     await store.dispatch(reduxApi.actions.locations.get())
     await store.dispatch(reduxApi.actions.tags.get())
     if (isNew) {
+      if (fromAct) {
+        activity = await store.dispatch(reduxApi.actions.activities.get())
+        activity = activity.find(x => x._id === query.act)
+      }
       return {
-        isNew
+        isNew,
+        fromAct,
+        activity
       }
     } else {
       if (opExists) {
@@ -61,7 +72,8 @@ export class OpDetailPage extends Component {
       }
       return {
         isNew,
-        opExists
+        opExists,
+        fromAct
       }
     }
   }
@@ -131,6 +143,15 @@ export class OpDetailPage extends Component {
   retrieveOpportunity () {
     let op
     if (this.props.isNew) {
+      // If op is created from activity, auto-populate data
+      if (this.props.fromAct) {
+        blankOp.title = this.props.activity.title
+        blankOp.subtitle = this.props.activity.subtitle
+        blankOp.duration = this.props.activity.duration
+        blankOp.description = this.props.activity.description
+        // blankOp.tags = this.props.activity.tags.map(blankOp => blankOp.tag)
+        blankOp.imgUrl = this.props.activity.imgUrl
+      }
       op = blankOp
       op.requestor = this.props.me
     } else {
