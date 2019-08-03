@@ -42,9 +42,11 @@ Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://
 
 4. `npm run start` - runs production server
 
-5. `npm run check-coverage` - generates test coverage report
+5. `npm run end-to-end-test` - runs system tests in browser using testcafe
 
-6. `npm run lint` - runs standard to check for lint errors ( npm run fix to fix lint errors )
+6. `npm run check-coverage` - generates test coverage report
+
+7. `npm run lint` - runs standard to check for lint errors ( npm run fix to fix lint errors )
 
 
 Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
