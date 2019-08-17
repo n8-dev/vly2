@@ -81,6 +81,10 @@ export function OpDetail ({ op }) {
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.status)}
           </ItemListing>
+          <ItemListing>
+            📝&nbsp;<strong>Organiser:</strong>&nbsp;&nbsp;&nbsp;
+            {op.requestor ? `${sanitize(op.requestor.nickname)}, ${sanitize(op.requestor.role[0])}` : ' '}
+          </ItemListing>
 
           <Spacer />
 
@@ -114,7 +118,12 @@ OpDetail.propTypes = {
     imgUrl: PropTypes.any,
     description: PropTypes.string,
     duration: PropTypes.string,
-    status: PropTypes.string
+    status: PropTypes.string,
+    requestor: PropTypes.shape({
+      'name': PropTypes.string,
+      'nickname': PropTypes.string,
+      'organisation': PropTypes.string,
+    })
   })
 }
 
