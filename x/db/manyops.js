@@ -12,20 +12,20 @@ const argv = require('yargs')
   .argv
 
 const API_URL = process.env.VLY_URL || 'http://localhost:3122'
-
+const limitedWords = words.slice(0, 200)
 const postOp = async (word) => {
   // Generate random location for opportunity
   const randomLocation = sortedLocations[Math.floor(Math.random() * sortedLocations.length)]
 
   // Generate random tags for opportunity from words
-  words.sort(function () { return 0.5 - Math.random() })
+  limitedWords.sort(function () { return 0.5 - Math.random() })
 
   // const maxSize = (tagIds.length > 10) ? 10 : tagIds.length
   const numberOfTags = 10 // Set the number of tags per opp (or randomise with Math.floor(Math.random() * maxSize))
-  let randomTags = []
+  const randomTags = []
 
   for (let i = 0; i < numberOfTags; i++) {
-    randomTags.push({ tag: words[i] })
+    randomTags.push({ tag: limitedWords[i] })
   }
 
   // Generate random image size for opportunity (necessary for generating different images)

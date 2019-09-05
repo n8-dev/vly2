@@ -11,7 +11,7 @@ const {
 } = require('./opportunity.controller')
 const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const initializeTags = require('../../util/initTags')
+const initializeTags = require('./opportunity.initTags')
 
 const convertRequestToAction = (req) => {
   switch (req.method) {
