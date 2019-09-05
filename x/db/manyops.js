@@ -13,7 +13,7 @@ const argv = require('yargs')
 
 const API_URL = process.env.VLY_URL || 'http://localhost:3122'
 const limitedWords = words.slice(0, 200)
-const postOp = async (word) => {
+const postOp = async (word, numTagsPerOp) => {
   // Generate random location for opportunity
   const randomLocation = sortedLocations[Math.floor(Math.random() * sortedLocations.length)]
 
@@ -21,10 +21,10 @@ const postOp = async (word) => {
   limitedWords.sort(function () { return 0.5 - Math.random() })
 
   // const maxSize = (tagIds.length > 10) ? 10 : tagIds.length
-  const numberOfTags = 10 // Set the number of tags per opp (or randomise with Math.floor(Math.random() * maxSize))
+  // const numberOfTags = 10 // Set the number of tags per opp (or randomise with Math.floor(Math.random() * maxSize))
   const randomTags = []
 
-  for (let i = 0; i < numberOfTags; i++) {
+  for (let i = 0; i < numTagsPerOp; i++) {
     randomTags.push({ tag: limitedWords[i] })
   }
 
@@ -49,10 +49,10 @@ const postOp = async (word) => {
     { headers: { Cookie: `idToken=${jwtData.idToken}` } })
 }
 
-const createOps = async (numOps) => {
+const createOps = async (numOps, numTagsPerOp) => {
   for (let i = 0; i < numOps; i++) {
-    await postOp(words[i])
+    await postOp(words[i], numTagsPerOp)
   }
 }
 
-createOps(parseInt(argv._[0]))
+createOps(parseInt(argv._[0]), parseInt(argv._[1]))
