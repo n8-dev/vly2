@@ -3,6 +3,8 @@ const Schema = mongoose.Schema
 
 const organisationSchema = new Schema({
   name: { type: 'String', required: true },
+  corporateLogoUrl: { type: 'String', required: true },
+  illustrationImageUrl: { type: 'String', required: true },
   slug: { type: 'String', required: true },
   about: { type: 'String' },
   // TODO: [VP-146] make required and provide a default image in the static folder.
