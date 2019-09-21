@@ -3,18 +3,18 @@ const Schema = mongoose.Schema
 
 const organisationSchema = new Schema({
   name: { type: 'String', required: true },
-  corporateLogoUrl: { type: 'String', required: true },
-  illustrationImageUrl: { type: 'String', required: true },
   slug: { type: 'String', required: true },
   about: { type: 'String' },
-  domain: {
-    type: ['String'], 
-    required: true, 
-    default: ['vp'], 
-    enum: ['admin', 'vp', 'op', 'ap', 'other']
-  },
   // TODO: [VP-146] make required and provide a default image in the static folder.
   imgUrl: String,
+  corporateLogoUrl: { type: 'String', required: true },
+  illustrationImageUrl: { type: 'String', required: true },
+  domain: {
+    type: ['String'],
+    required: true,
+    default: ['vp'],
+    enum: ['admin', 'vp', 'op', 'ap', 'other']
+  },
   contactEmail: String, //  TODO: replace with orgAdmin
   contactId: String,
   website: String,

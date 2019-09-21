@@ -4,6 +4,9 @@ const orgList = [
     slug: 'vly-admin',
     category: ['admin'],
     imgUrl: 'https://example.com/image1',
+    corporateLogoUrl: 'https://example.com/image5',
+    illustrationImageUrl: 'https://example.com/image6',
+    domain: ['datacom.co.nz', 'datacom.com.au'],
     info: {
       about: 'Industry in the classroom.',
       members: 'You are a member of Voluntarily.',
