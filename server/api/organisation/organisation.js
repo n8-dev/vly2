@@ -7,6 +7,12 @@ const organisationSchema = new Schema({
   illustrationImageUrl: { type: 'String', required: true },
   slug: { type: 'String', required: true },
   about: { type: 'String' },
+  domain: {
+    type: ['String'], 
+    required: true, 
+    default: ['vp'], 
+    enum: ['admin', 'vp', 'op', 'ap', 'other']
+  },
   // TODO: [VP-146] make required and provide a default image in the static folder.
   imgUrl: String,
   contactEmail: String, //  TODO: replace with orgAdmin
