@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
+import TagInput from '../Form/Input/TagInput'
+import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { H3Bold, P } from '../VTheme/VTheme'
-import TagInput from '../Form/Input/TagInput'
 
 import {
   DescriptionContainer,
@@ -54,6 +55,7 @@ class ActDetailForm extends Component {
         act.duration = values.duration
         act.resource = values.resource
         act.description = values.description
+        act.org = values.org && values.org.key
         act.imgUrl = values.imgUrl
         act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
@@ -139,6 +141,21 @@ class ActDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const actOrganisation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actOrganisation'
+          defaultMessage='Offer Organisation'
+          description='label for Organisation offering the activity'
+        />
+        &nbsp;
+        <Tooltip title='Which organisation is this activity for?'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
     const actImgUrl = (
       <span>
         <FormattedMessage
@@ -163,7 +180,7 @@ class ActDetailForm extends Component {
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
-
+    const orgMembership = this.props.me.orgMembership && this.props.me.orgMembership.map(member => member.organisation)
     // Only show error after a field is touched.
     const titleError = isFieldTouched('name') && getFieldError('name')
 
@@ -208,6 +225,13 @@ class ActDetailForm extends Component {
                     : <RichTextEditor onChange={this.setAbout} />
                 )}
               </Form.Item>
+              {orgMembership && (
+                <Form.Item label={actOrganisation}>
+                  {getFieldDecorator('org')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
             </InputContainer>
           </FormGrid>
 
@@ -374,10 +398,23 @@ ActDetailForm.propTypes = {
     time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
-    owner: PropTypes.string
+    owner: PropTypes.object,
+    org: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        _id: PropTypes.string
+      })
+    ])
   }),
   me: PropTypes.shape({
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    orgMembership: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        category: PropTypes.Array
+      })
+    )
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -403,6 +440,7 @@ export default Form.create({
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
       description: Form.createFormField({ ...props.act.description, value: props.act.description }),
+      org: Form.createFormField({ ...props.act.org, value: { key: props.act.org ? props.act.org._id : '' } }),
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
       location: Form.createFormField({ ...props.act.location, value: props.act.location }),
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),

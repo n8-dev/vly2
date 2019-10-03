@@ -10,7 +10,8 @@ import Loading from '../../components/Loading'
 import PersonCard from '../../components/Person/PersonCard'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withOrgs, withActs } from '../../lib/redux/reduxApi.js'
+import { MemberStatus } from '../../server/api/member/member.constants'
 import { Role } from '../../server/services/authorize/role'
 
 const blankAct = {
@@ -29,8 +30,12 @@ export class ActDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
-    await store.dispatch(reduxApi.actions.tags.get())
-
+    const me = store.getState().session.me
+    await Promise.all([
+      store.dispatch(reduxApi.actions.tags.get()),
+      store.dispatch(reduxApi.actions.organisations.get({ category: 'ap' })),
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id }))
+    ])
     // Get one Act
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
@@ -95,6 +100,11 @@ export class ActDetailPage extends Component {
     let content
     let act
     let owner
+    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
+      console.log(this.props.members.data)
+      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+    }
+
     if (this.props.isNew) {
       act = blankAct
       owner = me
@@ -191,5 +201,5 @@ ActDetailPage.propTypes = {
     id: PropTypes.string.isRequired
   })
 }
-export const ActDetailPageWithActs = withActs(ActDetailPage)
-export default publicPage(withActs(ActDetailPage))
+export const ActDetailPageWithActs = withOrgs(withActs(ActDetailPage))
+export default publicPage(withOrgs(withActs(ActDetailPage)))
