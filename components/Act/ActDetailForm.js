@@ -7,6 +7,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { H3Bold, P } from '../VTheme/VTheme'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
+import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet';
 
 import {
   DescriptionContainer,
@@ -117,6 +118,20 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actEquipment = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actEquipment'
+          defaultMessage='Equipment'
+          description='activity equipment label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='Make a list of all the special equipment required to complete this activity.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -312,6 +327,9 @@ class ActDetailForm extends Component {
                 </Form.Item>
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
+                </Form.Item>
+                <Form.Item label={actEquipment}>
+                  <DynamicFieldSet form={this.props.form} />
                 </Form.Item>
               </ShortInputContainer>
               <ul>
