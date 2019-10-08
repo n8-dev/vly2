@@ -63,10 +63,10 @@ export class DynamicFieldSet extends React.Component {
             {
               required: true,
               whitespace: true,
-              message: "Please input a special equipment or delete this field.",
+              message: this.props.validationMessage
             },
           ],
-        })(<Input placeholder="Equipment required" style={{ width: '94%', marginRight: 8 }} />)}
+        })(<Input placeholder={this.props.inputValue} style={{ width: '94%', marginRight: 8 }} />)}
         {keys.length > 1 ? (
           <Icon
             className="dynamic-delete-button"
@@ -80,14 +80,12 @@ export class DynamicFieldSet extends React.Component {
       <div>
         {formItems}
         <Form.Item {...formItemLayoutWithOutLabel}>
-          <Button type="dashed" onClick={this.add} style={{ width: '94%' }}>
-            <Icon type="plus" /> Add field
+          <Button className="ant-btn-primary ant-btn-round ant-btn-lg" onClick={this.add} style={{ width: '94%' }}>
+            <Icon type="plus" /> {this.props.buttonValue}
+
           </Button>
         </Form.Item>
       </div>
     );
   }
 }
-
-// const WrappedDynamicFieldSet = Form.create({ name: 'dynamic_form_item' })(DynamicFieldSet);
-// ReactDOM.render(<WrappedDynamicFieldSet />, mountNode);

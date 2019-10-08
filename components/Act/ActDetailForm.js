@@ -131,7 +131,7 @@ class ActDetailForm extends Component {
           description='activity equipment label in ActDetail Form'
         />
         &nbsp;
-        <Tooltip title='Make a list of all the special equipment required to complete this activity.'>
+        <Tooltip title='Make a list of any equipment or materials needed for this activity.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -328,18 +328,51 @@ class ActDetailForm extends Component {
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
                 </Form.Item>
-                <Form.Item label={actEquipment}>
-                  <DynamicFieldSet form={this.props.form} />
-                </Form.Item>
               </ShortInputContainer>
               <ul>
                 <li>TODO: [VP-301] list the number of volunteers required e.g. 1 adult for 5 children, or 20 people</li>
-                <li>TODO: [VP-302] list any equipment required for an activity</li>
                 <li>TODO: [VP-303] list any space requirements for an activity</li>
               </ul>
             </InputContainer>
           </FormGrid>
-          <Divider />
+          <Divider/>
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='actDetailForm.addEquipment.title'
+                    defaultMessage='Do you need any equipment or materials for this opportunity? (Optional)'
+                    description='subtitle for add equipment section in act detail form'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='actDetailForm.addEquipment.instructions'
+                  defaultMessage="Let volunteers and businesses know what you need to make the opportunity happen."
+                  description='instructions to add equipment in act detail form'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <MediumInputContainer>
+              <Form.Item label={actEquipment}>
+                <DynamicFieldSet form={this.props.form}
+                  inputValue={'Equipment required'}
+                  validationMessage={
+                    <FormattedMessage
+                      id='actDetailForm.addEquipment.validationMessage'
+                      defaultMessage={`Add an equipment or remove field`}
+                    />
+                  }
+                  buttonValue="Add item" 
+                />
+              </Form.Item>
+              </MediumInputContainer>
+            </InputContainer>
+          </FormGrid>
+          <Divider/>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
