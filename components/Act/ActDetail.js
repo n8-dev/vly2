@@ -20,7 +20,6 @@ export function ActDetail ({ act }) {
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemStatus status={act.status} />
-            <EquipmentList equimpment={act.equimpment} />
             <Divider />
             <ItemIdLine item={act.offerOrg} path='orgs' />
             <ItemIdLine item={act.owner} path='people' />
@@ -36,6 +35,7 @@ export function ActDetail ({ act }) {
               }}
             />
           </ItemDescription>
+          <EquipmentList equipment={act.equipment} />
           <Spacer />
         </Left>
         <Right>

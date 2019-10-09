@@ -7,7 +7,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { H3Bold, P } from '../VTheme/VTheme'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
-import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet';
+import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 
 import {
   DescriptionContainer,
@@ -53,6 +53,7 @@ class ActDetailForm extends Component {
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
+        act.equipment = values.equipment
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -335,7 +336,7 @@ class ActDetailForm extends Component {
               </ul>
             </InputContainer>
           </FormGrid>
-          <Divider/>
+          <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -350,29 +351,23 @@ class ActDetailForm extends Component {
               <P>
                 <FormattedMessage
                   id='actDetailForm.addEquipment.instructions'
-                  defaultMessage="Let volunteers and businesses know what you need to make the opportunity happen."
+                  defaultMessage='Let volunteers and businesses know what you need to make the opportunity happen.'
                   description='instructions to add equipment in act detail form'
                 />
               </P>
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
-              <Form.Item label={actEquipment}>
-                <DynamicFieldSet form={this.props.form}
-                  inputValue={'Equipment required'}
-                  validationMessage={
-                    <FormattedMessage
-                      id='actDetailForm.addEquipment.validationMessage'
-                      defaultMessage={`Add an equipment or remove field`}
-                    />
-                  }
-                  buttonValue="Add item" 
-                />
-              </Form.Item>
+                <Form.Item label={actEquipment}>
+                  <DynamicFieldSet form={this.props.form}
+                    inputValue={'Equipment required'}
+                    buttonValue='Add item'
+                  />
+                </Form.Item>
               </MediumInputContainer>
             </InputContainer>
           </FormGrid>
-          <Divider/>
+          <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -486,6 +481,7 @@ ActDetailForm.propTypes = {
     resource: PropTypes.string,
     time: PropTypes.Array,
     duration: PropTypes.string,
+    equipment: PropTypes.string,
     status: PropTypes.string,
     owner: PropTypes.string,
     offerOrg: PropTypes.oneOfType([
@@ -529,6 +525,7 @@ export default Form.create({
         value: { key: props.act.offerOrg ? props.act.offerOrg._id : '' }
       }),
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
+      equipment: Form.createFormField({ ...props.act.equipment, value: props.act.equipment }),
       location: Form.createFormField({ ...props.act.location, value: props.act.location }),
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),

@@ -1,55 +1,56 @@
 import { Form, Input, Icon, Button } from 'antd'
+import React from 'react'
 
-let id = 0;
+let id = 0
 
 export class DynamicFieldSet extends React.Component {
   remove = k => {
-    const { form } = this.props;
+    const { form } = this.props
     // can use data-binding to get
-    const keys = form.getFieldValue('keys');
+    const keys = form.getFieldValue('keys')
     // We need at least one passenger
     if (keys.length === 1) {
-      return;
+      return
     }
 
     // can use data-binding to set
     form.setFieldsValue({
-      keys: keys.filter(key => key !== k),
-    });
+      keys: keys.filter(key => key !== k)
+    })
   };
 
   add = () => {
-    const { form } = this.props;
+    const { form } = this.props
     // can use data-binding to get
-    const keys = form.getFieldValue('keys');
-    const nextKeys = keys.concat(id++);
+    const keys = form.getFieldValue('keys')
+    const nextKeys = keys.concat(id++)
     // can use data-binding to set
     // important! notify form to detect changes
     form.setFieldsValue({
-      keys: nextKeys,
-    });
+      keys: nextKeys
+    })
   };
 
-  render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+  render () {
+    const { getFieldDecorator, getFieldValue } = this.props.form
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 0 },
+        sm: { span: 0 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 24 },
-      },
-    };
+        sm: { span: 24 }
+      }
+    }
     const formItemLayoutWithOutLabel = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 24, offset: 0 },
-      },
-    };
-    getFieldDecorator('keys', { initialValue: [] });
-    const keys = getFieldValue('keys');
+        sm: { span: 24, offset: 0 }
+      }
+    }
+    getFieldDecorator('keys', { initialValue: [] })
+    const keys = getFieldValue('keys')
     const formItems = keys.map((k, index) => (
       <Form.Item
         {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
@@ -57,35 +58,26 @@ export class DynamicFieldSet extends React.Component {
         required={false}
         key={k}
       >
-        {getFieldDecorator(`names[${k}]`, {
-          validateTrigger: ['onChange', 'onBlur'],
-          rules: [
-            {
-              required: true,
-              whitespace: true,
-              message: this.props.validationMessage
-            },
-          ],
-        })(<Input placeholder={this.props.inputValue} style={{ width: '94%', marginRight: 8 }} />)}
+        <Input placeholder={this.props.inputValue} style={{ width: '94%', marginRight: 8 }} />
         {keys.length > 1 ? (
           <Icon
-            className="dynamic-delete-button"
-            type="minus-circle-o"
+            className='dynamic-delete-button'
+            type='minus-circle-o'
             onClick={() => this.remove(k)}
           />
         ) : null}
       </Form.Item>
-    ));
+    ))
     return (
       <div>
         {formItems}
         <Form.Item {...formItemLayoutWithOutLabel}>
-          <Button className="ant-btn-primary ant-btn-round ant-btn-lg" onClick={this.add} style={{ width: '94%' }}>
-            <Icon type="plus" /> {this.props.buttonValue}
+          <Button className='ant-btn-primary ant-btn-round ant-btn-lg' onClick={this.add} style={{ width: '94%' }}>
+            <Icon type='plus' /> {this.props.buttonValue}
 
           </Button>
         </Form.Item>
       </div>
-    );
+    )
   }
 }

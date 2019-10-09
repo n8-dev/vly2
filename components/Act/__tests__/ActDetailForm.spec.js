@@ -17,6 +17,7 @@ const noact = {
   imgUrl: '',
   description: '',
   duration: '',
+  equipment: [],
   status: 'draft',
   tags: []
 }
