@@ -26,7 +26,7 @@ ActList.practTypes = {
       name: PropTypes.string.isRequired,
       subtitle: PropTypes.string,
       imgUrl: PropTypes.any,
-      duration: PropTypes.string,
+      duration: PropTypes.string
     })
   ) // optional
 }

@@ -64,11 +64,11 @@ export const ItemStatus = ({ status }) =>
 
 export const EquipmentList = ({ equipment }) =>
   <ItemListing>
-      <FormattedMessage
-        id='itemlist.equipment'
-        defaultMessage='Equipment:'
-        description='Equipment label for acts and ops'
-      />&nbsp;&nbsp;&nbsp;
+    <FormattedMessage
+      id='itemlist.equipment'
+      defaultMessage='Equipment:'
+      description='Equipment label for acts and ops'
+    />&nbsp;&nbsp;&nbsp;
     {sanitize(equipment)}
   </ItemListing>
 
