@@ -69,7 +69,9 @@ export const EquipmentList = ({ equipment }) =>
       defaultMessage='Equipment:'
       description='Equipment label for acts and ops'
     />&nbsp;&nbsp;&nbsp;
-    {sanitize(equipment)}
+    <ul>
+      {equipment.map(item => <li>{item}</li>)}
+    </ul>
   </ItemListing>
 
 export const ItemIdLine = ({ item, path }) =>

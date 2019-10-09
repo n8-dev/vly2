@@ -32,6 +32,7 @@ export class DynamicFieldSet extends React.Component {
   };
 
   render () {
+    console.log('DynamicFieldSet', this.props)
     const { getFieldDecorator, getFieldValue } = this.props.form
     const formItemLayout = {
       labelCol: {
@@ -77,6 +78,13 @@ export class DynamicFieldSet extends React.Component {
 
           </Button>
         </Form.Item>
+        <ul>
+          {this.props.value ? this.props.value.map((item) =>
+            <li
+              key={item}
+            >{item}</li>
+          ) : null}
+        </ul>
       </div>
     )
   }

@@ -61,6 +61,10 @@ class ActDetailForm extends Component {
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
+        // extract equipment
+        // const keys = getFieldValue('keys')
+        console.log(values)
+
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
         if (!isTest) { window.scrollTo(0, 0) }
         this.props.onSubmit(this.props.act)
@@ -359,10 +363,15 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actEquipment}>
-                  <DynamicFieldSet form={this.props.form}
-                    inputValue={'Equipment required'}
-                    buttonValue='Add item'
-                  />
+                  {getFieldDecorator('equipment', {
+                    initialValue: [],
+                    rules: []
+                  })(
+                    <DynamicFieldSet form={this.props.form}
+                      inputValue={'Equipment required'}
+                      buttonValue='Add item'
+                    />
+                  )}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -481,7 +490,7 @@ ActDetailForm.propTypes = {
     resource: PropTypes.string,
     time: PropTypes.Array,
     duration: PropTypes.string,
-    equipment: PropTypes.string,
+    equipment: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,
     owner: PropTypes.string,
     offerOrg: PropTypes.oneOfType([
@@ -517,21 +526,20 @@ export default Form.create({
   name: 'activity_detail_form',
   mapPropsToFields (props) {
     return {
-      name: Form.createFormField({ ...props.act.name, value: props.act.name }),
-      subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
-      description: Form.createFormField({ ...props.act.description, value: props.act.description }),
+      name: Form.createFormField({ value: props.act.name }),
+      subtitle: Form.createFormField({ value: props.act.subtitle }),
+      description: Form.createFormField({ value: props.act.description }),
       offerOrg: Form.createFormField({
-        ...props.act.offerOrg,
         value: { key: props.act.offerOrg ? props.act.offerOrg._id : '' }
       }),
-      duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
-      equipment: Form.createFormField({ ...props.act.equipment, value: props.act.equipment }),
-      location: Form.createFormField({ ...props.act.location, value: props.act.location }),
-      imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
-      time: Form.createFormField({ ...props.act.time, value: props.act.time }),
-      resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      status: Form.createFormField({ ...props.act.status, value: props.act.status }),
-      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
+      duration: Form.createFormField({ value: props.act.duration }),
+      equipment: Form.createFormField({ value: props.act.equipment }),
+      location: Form.createFormField({ value: props.act.location }),
+      imgUrl: Form.createFormField({ value: props.act.imgUrl }),
+      time: Form.createFormField({ value: props.act.time }),
+      resource: Form.createFormField({ value: props.act.resource }),
+      status: Form.createFormField({ value: props.act.status }),
+      tags: Form.createFormField({ value: props.act.tags })
     }
   }
 
